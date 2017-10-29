@@ -2,8 +2,6 @@ import { takeEvery, put, call, select } from 'redux-saga/effects';
 import * as weatherActions from './actions';
 
 function* getLocation(action) {
-  // TODO fetch location, then update state
-
   const position = yield call(findLocation);
   yield put(
     weatherActions.updateLocation({
@@ -20,7 +18,6 @@ function* getLocation(action) {
 function* getWeather(action) {
   const getLocation = state => state.weather.location;
   const location = yield select(getLocation);
-  // TODO fetch weather based on location in state, then update state
   const weather = yield call(fetchWeather, location);
   yield put(weatherActions.updateWeather(weather));
 }
@@ -31,6 +28,7 @@ function* weatherSaga() {
 }
 
 //helper functions
+
 function findLocation() {
   const geolocation = navigator.geolocation;
   const location = new Promise((resolve, reject) => {

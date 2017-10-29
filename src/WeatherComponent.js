@@ -6,6 +6,25 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Plot from './Plot.js';
 
+class WeatherComponent extends Component {
+  componentWillMount() {
+    store.dispatch(weatherActions.getLocation());
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>The weather</h1>
+        {this.props.loadingLocation ? (
+          <div className="loader">Loading...</div>
+        ) : (
+          [<LocationWeather {...this.props} key="2" />]
+        )}
+      </div>
+    );
+  }
+}
+
 class LocationWeather extends Component {
   state = {
     location: '',
@@ -19,7 +38,6 @@ class LocationWeather extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { weather } = nextProps;
-    console.log('weather', weather);
     if (weather && weather[1]) {
       this.createForecast(weather[1].list);
     }
@@ -56,7 +74,6 @@ class LocationWeather extends Component {
   render() {
     const { weather } = this.props;
     const currentWeather = weather[0];
-    const forecastWeather = weather[1];
 
     if (currentWeather) {
       return (
@@ -77,25 +94,6 @@ class LocationWeather extends Component {
       );
     }
     return null;
-  }
-}
-
-class WeatherComponent extends Component {
-  componentWillMount() {
-    store.dispatch(weatherActions.getLocation());
-  }
-
-  render() {
-    return (
-      <div>
-        <h1>The weather</h1>
-        {this.props.loadingLocation ? (
-          <div class="loader">Loading...</div>
-        ) : (
-          [<LocationWeather {...this.props} />]
-        )}
-      </div>
-    );
   }
 }
 
