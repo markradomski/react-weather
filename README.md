@@ -1,4 +1,9 @@
 
 # react-weather
 
-Weather app demo using React, Redux, Sagas and Plot.ly
+Weather app using React, Redux, Sagas and Plot.ly
+
+Usage:
+
+1) `yarn install`
+2) `yarn start`
